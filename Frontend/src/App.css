@@ -1,0 +1,17 @@
+.App {
+  font-family: "Josefin Sans", sans-serif;
+  height: 100vh;
+  position: relative;
+  height: 772px;
+}
+
+@media (max-width: 1024px) {
+  .App {
+    height: 100vh;
+  }
+}
+@media (max-width: 540px) {
+  .App {
+    height: 900px;
+  }
+}
