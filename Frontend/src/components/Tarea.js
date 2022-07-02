@@ -15,7 +15,7 @@ export default function Tarea() {
             <div className="tareas">
                 <i className="marcadorCompletado" placeholder="casa">O<i className="marcaCompletado"></i>
                 </i>
-                <span className="tareaIndividual"> Este  es mi ejemplo sde mi segunda tarea pendiente</span>
+                <span className="tareaIndividual"> 000000000000000000000111111111111111111111</span>
                 <i className="borrar">X</i>
             </div>
 
