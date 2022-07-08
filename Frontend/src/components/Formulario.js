@@ -1,14 +1,16 @@
 import React from "react";
 import "../styles/estilo.css";
-export default function Formulario() {
+export default function Formulario(props) {
+
     return (
         <header id="formulario">
             <div>
                 <div id="tituloFormulario"><div>Lista de Tareas</div></div>
-                <form >
+
+                <form onSubmit={event => props.guardarTarea(event)}>
                     <div id="botonFormulario">
                         <input type="text" placeholder="Crea una nueva lista de tarea..." name="nuevaTareaARealizar" id="nuevaTareaARealizar" />
-                        <button className="mm" type="submit">+</button>
+                        <button type="submit">+</button>
                     </div>
                 </form>
             </div>
