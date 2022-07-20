@@ -1,10 +1,12 @@
 import React from 'react'
 import "../styles/estilo.css";
 import Botones from './Botones';
+
 import Tarea from './Tarea';
 
 
 function ListaDeTareas(props) {
+
 
     return (
         <div id="tareas">
@@ -16,25 +18,21 @@ function ListaDeTareas(props) {
                             name={tarea.name}
                             id={tarea.id}
                             email={tarea.email}
-                            borraTarea={id => props.borraTarea(id)} completed={tarea.pendiente} 
+
+                            borraTarea={id => props.borraTarea(id)} 
+                            editar = {props.editartarea}
+
                         />
                     )
                 }
             </div>
 
             <Botones
-            borraTarea={id => props.borrarPorId(id)}
-
-            tareasPendientes={(subLink, method) => props.tareasPendientes(subLink, method)}
-
             buscaTareasPendientes={() => props.buscaTareasPendientes()}
-
             buscaTareasGuardadas={() => props.buscaTareasGuardadas()}
-
             buscaTareasCompletadas={() => props.buscaTareasCompletadas()}
-
-            eliminarTareasCompletadas={() => props.eliminarTareasCompletadas()} 
-/>
+            eliminarTareasCompletadas={() => props.eliminarTareasCompletadas()}
+            />
 
         </div>
     )

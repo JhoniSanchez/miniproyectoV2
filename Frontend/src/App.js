@@ -1,13 +1,15 @@
 import './App.css';
 import Formulario from './components/Formulario';
-import {useState} from 'react';
+import { useState } from 'react';
 import ListaDeTareas from './components/ListaDeTareas';
-
+import Login from './components/Login';
+import { useAuth0 } from "@auth0/auth0-react";
 
 function App() {
+  const { user } = useAuth0();
+  const { isAuthenticated } = useAuth0();
 
   const [listadetareas, setListadetareas] = useState([]);
-
 
   async function buscaTodasLasTareasPendientes() {
     const parametros = {
@@ -20,7 +22,11 @@ function App() {
     const datos = await respuestaServidor.json();
     const listadetareas = [];
 
-    datos.map((tarea) => {
+    let usuarioActual = datos.filter(function (datos) {
+      return datos.email == user.name;
+    })
+
+    usuarioActual.map((tarea) => {
       const listadoActualizado = {
         id: tarea._id,
         name: tarea.descripcion,
@@ -38,24 +44,25 @@ function App() {
         'Content-Type': 'application/json'
       }
     }
+
     const respuestaServidor = await fetch("http://localhost:4000/notas/", parametros);
     const datos = await respuestaServidor.json();
     const listadetareas = [];
-    datos.map((tarea) => {
+
+    let usuarioActual = datos.filter(function (datos) {
+      return datos.email == user.name;
+    })
+
+    usuarioActual.map((tarea) => {
       const listadoActualizado = {
         id: tarea._id,
-        name: tarea.descripcion,
+        name: [tarea.descripcion],
         pendiente: tarea.pendiente
       }
       listadetareas.push(listadoActualizado);
     })
     setListadetareas(listadetareas);
   }
-
-
-
-
-
 
   async function buscaTodasLasTareasCompletadas() {
     const parametros = {
@@ -68,7 +75,11 @@ function App() {
     const datos = await respuestaServidor.json();
     const listadetareas = [];
 
-    datos.map((tarea) => {
+    let usuarioActual = datos.filter(function (datos) {
+      return datos.email == user.name;
+    })
+
+    usuarioActual.map((tarea) => {
       const listadoActualizado = {
         id: tarea._id,
         name: tarea.descripcion,
@@ -89,7 +100,12 @@ function App() {
     const respuestaServidor = await fetch("http://localhost:4000/notas/eliminar/realizadas", parametros);
     const datos = await respuestaServidor.json();
     const listadetareas = [];
-    datos.map((tarea) => {
+
+    let usuarioActual = datos.filter(function (datos) {
+      return datos.email == user.name;
+    })
+
+    usuarioActual.map((tarea) => {
       const listadoActualizado = {
         id: tarea._id,
         name: tarea.descripcion,
@@ -100,51 +116,51 @@ function App() {
     setListadetareas(listadetareas);
   }
 
-
-  async function guardarTarea() {
-
+  async function guardarTarea(event) {
+    event.preventDefault();
     const nuevaTarea = document.querySelector("#nuevaTareaARealizar").value;
     const parametros = {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ descripcion: nuevaTarea})
+      body: JSON.stringify({ descripcion: nuevaTarea, email: user.name })
     }
-    await fetch("http://localhost:4000/notas/", parametros);
-    
+    const respuestaServidor = await fetch("http://localhost:4000/notas/", parametros);
+    const datos = await respuestaServidor.json();
+    setListadetareas([...listadetareas, datos]);
+    await buscaTodasLasTareasGuardadas();
   }
 
   function borrarPorId(id) {
-     listadetareas.filter(tarea => tarea.id !== id);
+    const listadoActualizado = listadetareas.filter(tarea => tarea.id !== id);
+    setListadetareas(listadoActualizado);
   }
-  
-
+  async function editar(e) {
+    const descripcionDeTarea = e.target.previousSibling.previousSibling;
+    const idDeTarea = descripcionDeTarea.getAttribute('id');
+    console.log(idDeTarea);
+  };  
 
   return (
 
-
     <div className="App">
-        <Formulario
-        guardarTarea={event => guardarTarea(event)}
-      />
-      
-      <ListaDeTareas
-        todasTareas={listadetareas}
-        borraTarea={id => borrarPorId(id)}
 
-        buscaTareasPendientes={() => buscaTodasLasTareasPendientes()}
+      {isAuthenticated ?
 
-        buscaTareasGuardadas={() => buscaTodasLasTareasGuardadas()}
-
-        buscaTareasCompletadas={() => buscaTodasLasTareasCompletadas()}
-
-        eliminarTareasCompletadas={() => eliminaTodasLasTareasCompletadas()}        
-
-
-      />
-      
-
+        [<Formulario
+          guardarTarea={event => guardarTarea(event)}
+        />
+        , <ListaDeTareas
+          todasTareas={listadetareas}
+          borraTarea={id => borrarPorId(id)}
+          buscaTareasPendientes={() => buscaTodasLasTareasPendientes()}
+          buscaTareasGuardadas={() => buscaTodasLasTareasGuardadas()}
+          buscaTareasCompletadas={() => buscaTodasLasTareasCompletadas()}
+          eliminarTareasCompletadas={() => eliminaTodasLasTareasCompletadas()}
+        />]
+        : <Login />}
+        
     </div>
   );
 }

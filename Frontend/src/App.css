@@ -1,16 +1,18 @@
 .App {
-  font-family: "Josefin Sans", sans-serif;
+  background-color: rgb(13, 13, 51);
+  font-family:Arial, Helvetica, sans-serif;
+  color: rgb(255, 255, 255);
   height: 100vh;
   position: relative;
-  height: 772px;
+
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1080px) {
   .App {
     height: 100vh;
   }
 }
-@media (max-width: 540px) {
+@media (max-width: 615px) {
   .App {
     height: 900px;
   }
