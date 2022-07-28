@@ -64,6 +64,8 @@ function App() {
     setListadetareas(listadetareas);
   }
 
+ 
+
   async function buscaTodasLasTareasCompletadas() {
     const parametros = {
       method: "GET",

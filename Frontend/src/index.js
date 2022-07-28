@@ -11,7 +11,7 @@ root.render(
       clientId="ipgGYqXJyLVlT4IbVk36d5ZWg4wdc0Gw"
       redirectUri={"http://localhost:3000/"}>
       <App />
-    </Auth0Provider>
+</Auth0Provider>
 
   </React.StrictMode>
 );
