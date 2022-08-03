@@ -1,170 +1,225 @@
 import './App.css';
-import Formulario from './components/Formulario';
-import { useState } from 'react';
-import ListaDeTareas from './components/ListaDeTareas';
+import MainForm from './components/MainForm';
+import { useState, useEffect } from 'react';
 import Login from './components/Login';
 import { useAuth0 } from "@auth0/auth0-react";
 
 function App() {
   const { user } = useAuth0();
   const { isAuthenticated } = useAuth0();
+  const [thingsToDo, SetThingsToDo] = useState([]);
+  const [id, setId] = useState("");
+  const [edit, setEdit] = useState();
+  const [edit2, setEdit2] = useState(true);
+  const [seleccion, setSeleccion] = useState("all");
 
-  const [listadetareas, setListadetareas] = useState([]);
 
-  async function buscaTodasLasTareasPendientes() {
-    const parametros = {
+
+  useEffect(() => {
+    if (user) {
+      FindAllSavedTasks();
+    }
+  }, [user]);
+
+
+  useEffect(() => {
+    if (edit2) {
+      if (seleccion === "all") {
+        FindAllSavedTasks();
+      }
+      if (seleccion === "active") { findAllPendingTasks(); }
+      if (seleccion === "completed") { findAllCompletedTasks(); }
+      if (seleccion === "bcompleted") { findAllCompletedTasks(); }
+    }
+  }, [edit2]);
+
+
+  useEffect(() => {
+    if (seleccion) {
+      if (seleccion === "bcompleted") {
+        FindAllSavedTasks();
+      }
+    }
+  }, [seleccion]);
+
+
+  async function findAllPendingTasks() {
+    const options = {
       method: "GET",
       headers: {
         'Content-Type': 'application/json'
       }
     }
-    const respuestaServidor = await fetch("http://localhost:4000/notas/pendientes", parametros);
-    const datos = await respuestaServidor.json();
-    const listadetareas = [];
+    const responseServer = await fetch("http://localhost:4000/notas/pendientes/?user=" + user.name, options);
+    const serverdata = await responseServer.json();
+    const thingsToDo = [];
 
-    let usuarioActual = datos.filter(function (datos) {
-      return datos.email == user.name;
-    })
 
-    usuarioActual.map((tarea) => {
-      const listadoActualizado = {
-        id: tarea._id,
-        name: tarea.descripcion,
-        pendiente: tarea.pendiente
+    serverdata.map((task) => {
+      const listUpdated = {
+        id: task._id,
+        name: task.descripcion,
+        pendiente: task.pendiente
       }
-      listadetareas.push(listadoActualizado);
+      thingsToDo.push(listUpdated);
     })
-    setListadetareas(listadetareas);
+    SetThingsToDo(thingsToDo);
+    setSeleccion("active");
   }
 
-  async function buscaTodasLasTareasGuardadas() {
-    const parametros = {
+  async function 
+FindAllSavedTasks() {
+    const options = {
       method: "GET",
       headers: {
         'Content-Type': 'application/json'
       }
     }
 
-    const respuestaServidor = await fetch("http://localhost:4000/notas/", parametros);
-    const datos = await respuestaServidor.json();
-    const listadetareas = [];
+    const responseServer = await fetch("http://localhost:4000/notas/?user=" + user.name, options);
+    const serverdata = await responseServer.json();
+    const thingsToDo = [];
 
-    let usuarioActual = datos.filter(function (datos) {
-      return datos.email == user.name;
-    })
+    serverdata.map((task) => {
+      const listUpdated = {
+        id: task._id,
+        name: [task.descripcion],
 
-    usuarioActual.map((tarea) => {
-      const listadoActualizado = {
-        id: tarea._id,
-        name: [tarea.descripcion],
-        pendiente: tarea.pendiente
+        pendiente: task.pendiente
       }
-      listadetareas.push(listadoActualizado);
+      thingsToDo.push(listUpdated);
     })
-    setListadetareas(listadetareas);
+    SetThingsToDo(thingsToDo);
+    setSeleccion("all");
   }
 
- 
-
-  async function buscaTodasLasTareasCompletadas() {
-    const parametros = {
+  async function findAllCompletedTasks() {
+    const options = {
       method: "GET",
       headers: {
         'Content-Type': 'application/json'
       }
     }
-    const respuestaServidor = await fetch("http://localhost:4000/notas/realizadas", parametros);
-    const datos = await respuestaServidor.json();
-    const listadetareas = [];
+    const responseServer = await fetch("http://localhost:4000/notas/realizadas/?user=" + user.name, options);
+    const serverdata = await responseServer.json();
+    const thingsToDo = [];
 
-    let usuarioActual = datos.filter(function (datos) {
-      return datos.email == user.name;
-    })
 
-    usuarioActual.map((tarea) => {
-      const listadoActualizado = {
-        id: tarea._id,
-        name: tarea.descripcion,
-        pendiente: tarea.pendiente
+    serverdata.map((task) => {
+      const listUpdated = {
+        id: task._id,
+        name: task.descripcion,
+        pendiente: task.pendiente
       }
-      listadetareas.push(listadoActualizado);
+      thingsToDo.push(listUpdated);
     })
-    setListadetareas(listadetareas);
+    SetThingsToDo(thingsToDo);
+    setSeleccion("completed");
   }
 
-  async function eliminaTodasLasTareasCompletadas() {
-    const parametros = {
+  async function removeAllCompletedTasks() {
+    const options = {
       method: "DELETE",
       headers: {
         'Content-Type': 'application/json'
       }
     }
-    const respuestaServidor = await fetch("http://localhost:4000/notas/eliminar/realizadas", parametros);
-    const datos = await respuestaServidor.json();
-    const listadetareas = [];
+    const responseServer = await fetch("http://localhost:4000/notas/eliminar/realizadas?user=" + user.name, options);
+    const serverdata = await responseServer.json();
+    const thingsToDo = [];
 
-    let usuarioActual = datos.filter(function (datos) {
-      return datos.email == user.name;
-    })
-
-    usuarioActual.map((tarea) => {
-      const listadoActualizado = {
-        id: tarea._id,
-        name: tarea.descripcion,
-        pendiente: tarea.pendiente
+    serverdata.map((task) => {
+      const listUpdated = {
+        id: task._id,
+        name: task.descripcion,
+        pendiente: task.pendiente
       }
-      listadetareas.push(listadoActualizado);
+      thingsToDo.push(listUpdated);
     })
-    setListadetareas(listadetareas);
+    SetThingsToDo(thingsToDo);
+    setSeleccion("bcompleted");
   }
 
-  async function guardarTarea(event) {
+  async function saveTask(event) {
     event.preventDefault();
-    const nuevaTarea = document.querySelector("#nuevaTareaARealizar").value;
-    const parametros = {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ descripcion: nuevaTarea, email: user.name })
+
+    if (edit2 === true) {
+      const newTask = document.querySelector("#newTaskToPerform").value;
+      const options = {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ descripcion: newTask, email: user.name })
+      }
+      const responseServer = await fetch("http://localhost:4000/notas/", options);
+      const serverdata = await responseServer.json();
+      SetThingsToDo([...thingsToDo, serverdata]);
+      setSeleccion("active");
+      await findAllPendingTasks();
+      
+
     }
-    const respuestaServidor = await fetch("http://localhost:4000/notas/", parametros);
-    const datos = await respuestaServidor.json();
-    setListadetareas([...listadetareas, datos]);
-    await buscaTodasLasTareasGuardadas();
+    else {
+
+      const newTask = document.querySelector("#newTaskToPerform").value;
+      const options = {
+        method: "PUT",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ descripcion: newTask })
+      }
+      const responseServer = await fetch("http://localhost:4000/notas/" + id, options);
+      const serverdata = await responseServer.json();
+
+    }
+    setEdit()
+    setEdit2(true)
   }
 
-  function borrarPorId(id) {
-    const listadoActualizado = listadetareas.filter(tarea => tarea.id !== id);
-    setListadetareas(listadoActualizado);
+
+  function deleteById(id) {
+    const listUpdated = thingsToDo.filter(task => task.id !== id);
+    SetThingsToDo(listUpdated);
   }
-  async function editar(e) {
-    const descripcionDeTarea = e.target.previousSibling.previousSibling;
-    const idDeTarea = descripcionDeTarea.getAttribute('id');
-    console.log(idDeTarea);
-  };  
+
+
+  async function editTask(e) {
+    e.preventDefault();
+    const taskDescription = e.target.previousSibling.previousSibling;
+    const taskId = taskDescription.getAttribute('id');
+    const paragraph = document.getElementById(taskId);
+    const contents = paragraph.innerHTML;
+
+    setEdit(contents)
+    setEdit2(false)
+    setId(taskId)
+
+  }
 
   return (
 
     <div className="App">
-
       {isAuthenticated ?
+        <MainForm
+          saveTask={event => saveTask(event)}
+          editTask={event => editTask(event)}
+          edit={edit}
+          setEdit={setEdit}
+          allTasks={thingsToDo}
+          allTasksPending={(e) => findAllPendingTasks(e)}
+          deleteTaskById={id => deleteById(id)}
+          searchPendingTasks={() => findAllPendingTasks()}
+          searchSavedTasks={() => FindAllSavedTasks()}
+          searchCompletedTasks={() => findAllCompletedTasks()}
+          deleteCompletedTasks={() => removeAllCompletedTasks()}
 
-        [<Formulario
-          guardarTarea={event => guardarTarea(event)}
         />
-        , <ListaDeTareas
-          todasTareas={listadetareas}
-          borraTarea={id => borrarPorId(id)}
-          buscaTareasPendientes={() => buscaTodasLasTareasPendientes()}
-          buscaTareasGuardadas={() => buscaTodasLasTareasGuardadas()}
-          buscaTareasCompletadas={() => buscaTodasLasTareasCompletadas()}
-          eliminarTareasCompletadas={() => eliminaTodasLasTareasCompletadas()}
-        />]
         : <Login />}
-        
     </div>
   );
 }
 
 export default App;
+

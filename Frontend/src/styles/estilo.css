@@ -1,4 +1,4 @@
-.pantallaBienvenida {
+.welcomeScreen {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -9,13 +9,13 @@
   padding: 10px;
 }
 
-.mensajeBienvenida {
+.messageWelcome {
   text-align: center;
   padding: 30px;
   order: 4;
 }
 
-.mensaje1 {
+.message1 {
   width: 100%;
   padding: 15px;
   background: transparent;
@@ -23,7 +23,7 @@
   font-weight: bold;
 }
 
-.marcoImagenBienvenida {
+.frameImageWelcome {
   padding: 10px;
   max-width: 400px;
   border-image: 50%;
@@ -39,7 +39,7 @@ img {
   border-radius: 50%;
 }
 
-.imagenBienvenida {
+.imageWelcome {
   background-color: rgba(112, 50, 182, 0.562);
   border-radius: 60%;
   text-align: center;
@@ -47,7 +47,7 @@ img {
 
 }
 
-.botoningresar {
+.enterButton {
   background-color: rgba(0, 0, 0, 0.466);
   margin-top: 25px;
   height: 50px;
@@ -59,14 +59,14 @@ img {
   font-size: 20px;
 }
 
-.botoningresar:hover {
+.enterButton:hover {
   background-color: rgba(252, 159, 255, 0.411);
   color: white;
   font-size: 25px;
 }
 
 
-#formulario {
+#MainForm {
   height: 300px;
   display: flex;
   justify-content: center;
@@ -75,7 +75,7 @@ img {
   background-size: 100% auto;
 }
 
-#tituloFormulario {
+#titleForm {
   width: 540px;
   display: flex;
   justify-content: space-around;
@@ -84,7 +84,7 @@ img {
   color: #ffffff;
 }
 
-.usuarioySession {
+.userandSession {
   height: 40px;
   background-color: rgba(235, 208, 139, 0);
   color: rgb(255, 255, 255);
@@ -93,28 +93,28 @@ img {
   justify-content: center;
 }
 
-.usuario {
+.Username {
   margin-right: 80px;
   font-weight: 40px;
   cursor: pointer;
   font-size: 10px;
 }
 
-.cerrrarSession:hover {
+.closeSession:hover {
   color: #ffffff;
   cursor: pointer;
   text-decoration: none;
 
 }
 
-.cerrrarSession {
+.closeSession {
   color: #ff9d9d;
   cursor: pointer;
   text-decoration: none;
   font-size: 10px;
 }
 
-#botonFormulario {
+#buttonForm {
   margin-top: 15px;
   display: flex;
   align-items: center;
@@ -145,7 +145,7 @@ input {
   font-size: 20px;
 }
 
-.tarea {
+.task {
   font-size: 20px;
   padding: 10px;
   display: flex;
@@ -156,7 +156,7 @@ input {
   color: #ffffff9d;
 }
 
-.marcadorCompletado {
+.bookmarkCompleted {
   margin-right: 20px;
   font-weight: bolder;
   font-size: 20px;
@@ -164,11 +164,11 @@ input {
 
 }
 
-.tareaIndividual {
+.individualTask {
   width: 395px;
 }
 
-.deleteTodo2:hover {
+.editToDo:hover {
   color: rgb(255, 208, 0);
   cursor: pointer;
 }
@@ -178,22 +178,23 @@ input {
   cursor: pointer;
 }
 
-.marcadorCompletado:hover {
+.bookmarkCompleted:hover {
   color: rgb(49, 197, 255);
 }
 
-#tareas {
+#tasks {
   height: 50%;
+  /* width: 1000px; */
   background-color: rgb(224, 224, 224);
   border-radius: 10px;
   position: absolute;
   left: 50%;
-  top: 25%;
+  top: 23%;
   transform: translateX(-50%);
   background-color: rgba(0, 0, 0, 0.726);
 }
 
-#listaDeTodasTareas {
+#listOfAllTasks {
   height: 91%;
   margin: 10px;
   background-color: #050020a2;
@@ -206,36 +207,36 @@ input {
   margin-right: 10px;
 }
 
-#botonesInferiorFiltros {
+#ButtonsBottomFilters {
   display: flex;
 }
 
-#botonesInferiorFiltros div {
+#ButtonsBottomFilters div {
   display: flex;
   width: 200px;
   justify-content: space-evenly;
 }
 
-.conteoDeTareas {
+.TaskCount {
   cursor: pointer;
   color: #3a3a3a;
 }
 
-.borracompletadas:hover {
+.deletecompleted:hover {
   color: #f37575;
 }
 
-.borracompletadas {
+.deletecompleted {
   cursor: pointer;
   color: #747474;
 }
 
-.botonFiltro {
+.filterButton {
   cursor: pointer;
   color: #747474;
 }
 
-.botonFiltro:hover {
+.filterButton:hover {
   color: #f1f1f7 !important;
 }
 
@@ -245,41 +246,42 @@ input {
     height: 45px;
   }
 
-  #listaDeTodasTareas {
+  #listOfAllTasks {
     height: 86%;
   }
 
-  #formulario #tituloFormulario {
+  #MainForm #titleForm {
     width: 100%;
     font-size: 30px;
   }
 
-  .usuarioySession {
+  .userandSession {
     width: 80%;
   }
 
-  #tareas {
+  #tasks {
     width: 80%;
     top: 15.5%;
   }
 
-  #botonesInferiorFiltros {
+  #ButtonsBottomFilters {
     justify-content: space-between;
   }
 
-  .conteoDeTareas {
+  .TaskCount {
     font-size: 12px;
   }
 
-  .borracompletadas {
+  .deletecompleted {
     font-size: 12px;
   }
 
-  .tarea {
+  .task {
     font-size: 12px;
+    
   }
 
-  #grupodebotoninferiorA {
+  #buttongroupbottomA {
     font-size: 12px;
     display: flex;
     overflow-wrap: break-word;
@@ -293,7 +295,7 @@ input {
     background-color: #000000b7;
   }
 
-  .usuarioySession {
+  .userandSession {
     height: 20px;
     background-color: rgba(235, 208, 139, 0);
     color: rgb(255, 255, 255);
@@ -303,14 +305,14 @@ input {
     justify-content: center;
   }
 
-  .usuario {
+  .Username {
     margin-right: 20px;
     font-weight: 20px;
     cursor: pointer;
     font-size: 5px;
   }
 
-  #formulario {
+  #MainForm {
     height: 150px;
     display: flex;
     justify-content: center;
@@ -319,7 +321,7 @@ input {
     background-size: 100% auto;
   }
 
-  #botonFormulario {
+  #buttonForm {
     margin-top: 0px;
     display: flex;
     align-items: center;

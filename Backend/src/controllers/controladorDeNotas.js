@@ -1,66 +1,38 @@
 import Nota from "../models/Notas.js"
-import usuario from "../models/Usuarios.js";
-import jsonWebToken from "jsonwebtoken";
-import palabraClave from "../../palabraClave.js";
 import Notas from "../models/Notas.js";
 
 export const nuevaNota = async (req, res)=>{
 
-    const {descripcion} = req.body;
-    const crearNotaNueva = new Nota({descripcion});
-         
-    const token = req.headers["token-de-acceso"];    
-    const obtenerEmailDesdeHeaders = jsonWebToken.verify(token, palabraClave.SECRET);
-    req.userEmail = obtenerEmailDesdeHeaders.id;
-    const user = await usuario.findById(req.userEmail);    
-    const email = user.email
-    console.log(email);   
-    
-    crearNotaNueva.email = email
+    const {descripcion, email} = req.body;
+    const crearNotaNueva = new Nota({descripcion, email});
     const guardada = await crearNotaNueva.save()
-
-    console.log(guardada)
     res.json(guardada)
 }
 
 export const obtenerTodasLasNotas = async (req, res)=>{
 
-    const token = req.headers["token-de-acceso"];   
-
-    const obtenerEmailDesdeHeaders = jsonWebToken.verify(token, palabraClave.SECRET);
-    req.userEmail = obtenerEmailDesdeHeaders.id;
-    const user = await usuario.findById(req.userEmail);    
-    const email = user.email
-    console.log(email);    
-
-    const TodasLasNotasPorEmail = await Nota.find({ email: email });    
+    const filters = req.query.user;
+    const TodasLasNotasPorEmail = await Nota.find(        
+        { email: filters }        
+        );    
     res.json(TodasLasNotasPorEmail);
 }
 
 export const obtenerTodasLasNotasPendiente = async (req, res)=>{
 
-    const token = req.headers["token-de-acceso"];   
+    const filters = req.query.user;
 
-    const obtenerEmailDesdeHeaders = jsonWebToken.verify(token, palabraClave.SECRET);
-    req.userEmail = obtenerEmailDesdeHeaders.id;
-    const user = await usuario.findById(req.userEmail);    
-    const email = user.email
-    console.log(email);    
-
-    const TodasLasNotasPorEmail = await Nota.find({ email: email , pendiente: true});    
+    const TodasLasNotasPorEmail = await Nota.find({
+         email: filters ,
+         pendiente: true});    
     res.json(TodasLasNotasPorEmail);
 }
 export const obtenerTodasLasNotasRealizadas = async (req, res)=>{
 
-    const token = req.headers["token-de-acceso"];   
-
-    const obtenerEmailDesdeHeaders = jsonWebToken.verify(token, palabraClave.SECRET);
-    req.userEmail = obtenerEmailDesdeHeaders.id;
-    const user = await usuario.findById(req.userEmail);    
-    const email = user.email
-    console.log(email);    
-
-    const TodasLasNotasPorEmail = await Nota.find({ email: email , pendiente: false});    
+    const filters = req.query.user;
+    const TodasLasNotasPorEmail = await Nota.find({
+                email: filters , 
+                pendiente: false});    
     res.json(TodasLasNotasPorEmail);
 }
 
@@ -80,15 +52,11 @@ res.json()
 
 export const eliminarTodasLasNotasRealizadas = async (req, res)=>{
 
-    const token = req.headers["token-de-acceso"];   
+    const filters = req.query.user;
 
-    const obtenerEmailDesdeHeaders = jsonWebToken.verify(token, palabraClave.SECRET);
-    req.userEmail = obtenerEmailDesdeHeaders.id;
-    const user = await usuario.findById(req.userEmail);    
-    const email = user.email
-    console.log(email);    
-
-    const TodasLasNotasPorEmail = await Notas.find({ email: email , pendiente: false});    
+    const TodasLasNotasPorEmail = await Notas.find({         
+        email: filters , 
+        pendiente: false});    
     TodasLasNotasPorEmail.map(async (nota) => { await Notas.findByIdAndDelete(nota._id) });
     res.json(TodasLasNotasPorEmail)
 
