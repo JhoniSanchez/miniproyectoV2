@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
-const esquemaDeNotas = new Schema({
-    descripcion:String, 
+const NoteSchema = new Schema({
+    name:String, 
     email: String,   
-    pendiente: {
+    pending: {
         type: Boolean,
         default: true
     },
@@ -17,4 +17,4 @@ const esquemaDeNotas = new Schema({
 
 )
 
-export default model("Nota", esquemaDeNotas)
+export default model("Note", NoteSchema)

@@ -6,12 +6,12 @@ const Login = () => {
 
     <div className="welcomeScreen">
       <div className="messageWelcome">
-        <div className="message1">
+        <p className="message1">
           A Place to Keep Your Tasks
-        </div>
-        <div className="message2">
+        </p>
+        <p className="message2">
         Press the button to start
-        </div>
+        </p>
         <button onClick={() => loginWithRedirect()} type="submit" className="enterButton">Get into</button>
       </div>
       <div className="frameImageWelcome">

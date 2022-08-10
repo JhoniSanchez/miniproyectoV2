@@ -1,24 +1,23 @@
 import { Router } from "express";
-import {nuevaNota} from "../controllers/controladorDeNotas.js";
-import {obtenerTodasLasNotasPendiente} from "../controllers/controladorDeNotas.js";
-import {obtenerTodasLasNotasRealizadas} from "../controllers/controladorDeNotas.js";
-import {obtenerTodasLasNotas} from "../controllers/controladorDeNotas.js";
-import {actualizarNota} from "../controllers/controladorDeNotas.js";
-import {marcaNotaRealizada} from "../controllers/controladorDeNotas.js";
-import {eliminarNota} from "../controllers/controladorDeNotas.js";
-import {eliminarTodasLasNotasRealizadas} from "../controllers/controladorDeNotas.js";
+import {newNote} from "../controllers/notecontroller.js";
+import {getAllPendingNotes} from "../controllers/notecontroller.js";
+import {getAllNotesDone} from "../controllers/notecontroller.js";
+import {getAllNotes} from "../controllers/notecontroller.js";
+import {updateNote} from "../controllers/notecontroller.js";
+import {markNoteDone} from "../controllers/notecontroller.js";
+import {removeNote} from "../controllers/notecontroller.js";
+import {deleteAllNotesDone} from "../controllers/notecontroller.js";
 
 const rutas = Router();
 
-
-rutas.post("/",                       nuevaNota);
-rutas.get("/pendientes",              obtenerTodasLasNotasPendiente);
-rutas.get("/realizadas",              obtenerTodasLasNotasRealizadas);
-rutas.get("/",                        obtenerTodasLasNotas);
-rutas.put("/:Id",                     actualizarNota);
-rutas.put("/marcarrealizada/:Id",     marcaNotaRealizada);
-rutas.delete("/:Id",                  eliminarNota);
-rutas.delete("/eliminar/realizadas",  eliminarTodasLasNotasRealizadas);
+rutas.post("/", newNote);
+rutas.get("/pending", getAllPendingNotes);
+rutas.get("/made", getAllNotesDone);
+rutas.get("/", getAllNotes);
+rutas.put("/:Id", updateNote);
+rutas.put("/markdone/:Id", markNoteDone);
+rutas.delete("/:Id", removeNote);
+rutas.delete("/remove/made", deleteAllNotesDone);
 
 
 export default rutas;

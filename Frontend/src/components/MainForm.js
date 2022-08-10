@@ -19,17 +19,16 @@ export default function MainForm(props) {
         <div id="MainForm">
 
             <div>
-                <div id="titleForm"><div>Lista de Tareas</div></div>
+                <div id="titleForm">Things to do</div>
              
                 <div className="userandSession">
-                    <div className="Username">Hola, {user.name}</div>
-                    <div className="closeSession" onClick={() => logout()}>Sign off</div>
-
+                    <p className="Username">Hola, {user.name}</p>
+                    <p className="closeSession" onClick={() => logout()}>Sign off</p>
                 </div>
               
                 <form onSubmit={event => props.saveTask(event)}>
                     <div id="buttonForm">
-                        <input type="text" placeholder="Create or edit the task..." name="newTaskToPerform" id="newTaskToPerform" value={props.edit}  onChange={(e)=>props.setEdit(e.target.value)} />
+                        <input  type="text" placeholder="Create or edit the task..." name="newTaskToPerform" id="newTaskToPerform" value={props.edit}  onChange={(e)=>props.setEdit(e.target.value)} />
                         <button type="submit">Save</button>
                     </div>
                 </form>
@@ -45,6 +44,8 @@ export default function MainForm(props) {
                     searchSavedTasks={() =>props.searchSavedTasks ()}            
                     searchCompletedTasks={() => props.searchCompletedTasks()}            
                     deleteCompletedTasks={() =>props.deleteCompletedTasks ()}  
+                    remove = {(event) => props.remove(event)}
+                    putCompleted = {(event) => props.putCompleted(event)}
 />
 
 

@@ -16,10 +16,12 @@ function thingsToDo(props) {
                             id={task.id}
                             email={task.email}
                             deleteTaskById={id => props.deleteTaskById(id)} 
-                            completed={task.pendiente} 
+                            completed={task.pending} 
                             editTask = {props.editTask}
                             searchFoPendingTasks ={props.searchPendingTasks}
-                           />
+                            remove = {(event) => props.remove(event)}
+                            putCompleted = {(event) => props.putCompleted(event)}
+                        />
                     )
                 }
             </div>

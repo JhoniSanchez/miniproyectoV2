@@ -180,6 +180,7 @@ input {
 
 .bookmarkCompleted:hover {
   color: rgb(49, 197, 255);
+  
 }
 
 #tasks {
@@ -264,9 +265,9 @@ input {
     top: 15.5%;
   }
 
-  #ButtonsBottomFilters {
+  /* #ButtonsBottomFilters {
     justify-content: space-between;
-  }
+  } */
 
   .TaskCount {
     font-size: 12px;
@@ -274,6 +275,7 @@ input {
 
   .deletecompleted {
     font-size: 12px;
+    
   }
 
   .task {

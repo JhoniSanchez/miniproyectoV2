@@ -1,46 +1,20 @@
 import './App.css';
 import MainForm from './components/MainForm';
-import { useState, useEffect } from 'react';
 import Login from './components/Login';
 import { useAuth0 } from "@auth0/auth0-react";
+import { useState, useEffect } from 'react';
 
 function App() {
+
   const { user } = useAuth0();
   const { isAuthenticated } = useAuth0();
+
   const [thingsToDo, SetThingsToDo] = useState([]);
+
   const [id, setId] = useState("");
   const [edit, setEdit] = useState();
   const [edit2, setEdit2] = useState(true);
   const [seleccion, setSeleccion] = useState("all");
-
-
-
-  useEffect(() => {
-    if (user) {
-      FindAllSavedTasks();
-    }
-  }, [user]);
-
-
-  useEffect(() => {
-    if (edit2) {
-      if (seleccion === "all") {
-        FindAllSavedTasks();
-      }
-      if (seleccion === "active") { findAllPendingTasks(); }
-      if (seleccion === "completed") { findAllCompletedTasks(); }
-      if (seleccion === "bcompleted") { findAllCompletedTasks(); }
-    }
-  }, [edit2]);
-
-
-  useEffect(() => {
-    if (seleccion) {
-      if (seleccion === "bcompleted") {
-        FindAllSavedTasks();
-      }
-    }
-  }, [seleccion]);
 
 
   async function findAllPendingTasks() {
@@ -50,25 +24,27 @@ function App() {
         'Content-Type': 'application/json'
       }
     }
-    const responseServer = await fetch("http://localhost:4000/notas/pendientes/?user=" + user.name, options);
+    const responseServer = await fetch("http://localhost:4000/notas/pending/?user=" + user.name, options);
     const serverdata = await responseServer.json();
     const thingsToDo = [];
-
 
     serverdata.map((task) => {
       const listUpdated = {
         id: task._id,
-        name: task.descripcion,
-        pendiente: task.pendiente
+        name: task.name,
+        pending: task.pending
       }
       thingsToDo.push(listUpdated);
     })
+   
     SetThingsToDo(thingsToDo);
+
+    
+    
     setSeleccion("active");
   }
 
-  async function 
-FindAllSavedTasks() {
+  async function FindAllSavedTasks() {
     const options = {
       method: "GET",
       headers: {
@@ -83,12 +59,18 @@ FindAllSavedTasks() {
     serverdata.map((task) => {
       const listUpdated = {
         id: task._id,
-        name: [task.descripcion],
-
-        pendiente: task.pendiente
+        name: [task.name],
+        pending: task.pending
       }
       thingsToDo.push(listUpdated);
     })
+
+
+ 
+  
+
+
+
     SetThingsToDo(thingsToDo);
     setSeleccion("all");
   }
@@ -100,7 +82,7 @@ FindAllSavedTasks() {
         'Content-Type': 'application/json'
       }
     }
-    const responseServer = await fetch("http://localhost:4000/notas/realizadas/?user=" + user.name, options);
+    const responseServer = await fetch("http://localhost:4000/notas/made/?user=" + user.name, options);
     const serverdata = await responseServer.json();
     const thingsToDo = [];
 
@@ -108,8 +90,8 @@ FindAllSavedTasks() {
     serverdata.map((task) => {
       const listUpdated = {
         id: task._id,
-        name: task.descripcion,
-        pendiente: task.pendiente
+        name: task.name,
+        pending: task.pending
       }
       thingsToDo.push(listUpdated);
     })
@@ -124,15 +106,15 @@ FindAllSavedTasks() {
         'Content-Type': 'application/json'
       }
     }
-    const responseServer = await fetch("http://localhost:4000/notas/eliminar/realizadas?user=" + user.name, options);
+    const responseServer = await fetch("http://localhost:4000/notas/remove/made?user=" + user.name, options);
     const serverdata = await responseServer.json();
     const thingsToDo = [];
 
     serverdata.map((task) => {
       const listUpdated = {
         id: task._id,
-        name: task.descripcion,
-        pendiente: task.pendiente
+        name: task.name,
+        pending: task.pending
       }
       thingsToDo.push(listUpdated);
     })
@@ -150,7 +132,7 @@ FindAllSavedTasks() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ descripcion: newTask, email: user.name })
+        body: JSON.stringify({ name: newTask, email: user.name })
       }
       const responseServer = await fetch("http://localhost:4000/notas/", options);
       const serverdata = await responseServer.json();
@@ -168,10 +150,11 @@ FindAllSavedTasks() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ descripcion: newTask })
+        body: JSON.stringify({ name: newTask })
       }
       const responseServer = await fetch("http://localhost:4000/notas/" + id, options);
-      const serverdata = await responseServer.json();
+      
+      await responseServer.json();
 
     }
     setEdit()
@@ -198,6 +181,75 @@ FindAllSavedTasks() {
 
   }
 
+  
+
+     async function putCompleted(event) {
+        const CompletedBox = event.target;
+        let taskDescription = null;
+
+        if (CompletedBox.classList.contains("0")) {
+            CompletedBox.style = "color: blue";
+            taskDescription = CompletedBox.parentElement.nextSibling;
+        } 
+
+        const options = {
+            method: "PUT", 
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }
+        const taskId = taskDescription.getAttribute('id');
+        const a = await fetch("http://localhost:4000/notas/markdone/" + taskId, options);
+    }
+
+    async function remove (event) {
+        const taskDescription = event.target.previousSibling;
+
+
+        const taskId = taskDescription.getAttribute('id');
+        const options = {
+            method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }
+        const a = await fetch("http://localhost:4000/notas/" + taskId, options);
+        deleteById(taskId);
+    }
+
+
+
+
+
+  useEffect(() => {
+    if (user) {
+      FindAllSavedTasks();
+    }
+  }, [user]);
+
+
+  useEffect(() => {
+    
+      if (seleccion === "all") {
+        FindAllSavedTasks();
+      }
+      if (seleccion === "active") { findAllPendingTasks(); }
+      if (seleccion === "completed") { findAllCompletedTasks(); }
+      
+    
+  }, [edit2]);
+
+
+  useEffect(() => {
+    
+      if (seleccion === "bcompleted") {
+        FindAllSavedTasks();
+      }
+    
+  }, [seleccion]);
+
+
+
   return (
 
     <div className="App">
@@ -214,6 +266,8 @@ FindAllSavedTasks() {
           searchSavedTasks={() => FindAllSavedTasks()}
           searchCompletedTasks={() => findAllCompletedTasks()}
           deleteCompletedTasks={() => removeAllCompletedTasks()}
+          remove = {(event) => remove(event)}
+          putCompleted = {(event) => putCompleted(event)}
 
         />
         : <Login />}
