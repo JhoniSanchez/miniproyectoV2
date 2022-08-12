@@ -13,8 +13,7 @@ export default function MainForm(props) {
 
       
     return (
-        <>
-        
+        <>        
       
         <div id="MainForm">
 

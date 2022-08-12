@@ -37,9 +37,7 @@ function App() {
       thingsToDo.push(listUpdated);
     })
    
-    SetThingsToDo(thingsToDo);
-
-    
+    SetThingsToDo(thingsToDo);    
     
     setSeleccion("active");
   }
@@ -65,12 +63,6 @@ function App() {
       thingsToDo.push(listUpdated);
     })
 
-
- 
-  
-
-
-
     SetThingsToDo(thingsToDo);
     setSeleccion("all");
   }
@@ -85,7 +77,6 @@ function App() {
     const responseServer = await fetch("http://localhost:4000/notas/made/?user=" + user.name, options);
     const serverdata = await responseServer.json();
     const thingsToDo = [];
-
 
     serverdata.map((task) => {
       const listUpdated = {
@@ -138,8 +129,7 @@ function App() {
       const serverdata = await responseServer.json();
       SetThingsToDo([...thingsToDo, serverdata]);
       setSeleccion("active");
-      await findAllPendingTasks();
-      
+      await findAllPendingTasks();      
 
     }
     else {
@@ -179,9 +169,7 @@ function App() {
     setEdit2(false)
     setId(taskId)
 
-  }
-
-  
+  }  
 
      async function putCompleted(event) {
         const CompletedBox = event.target;
@@ -204,8 +192,6 @@ function App() {
 
     async function remove (event) {
         const taskDescription = event.target.previousSibling;
-
-
         const taskId = taskDescription.getAttribute('id');
         const options = {
             method: "DELETE",
@@ -216,9 +202,6 @@ function App() {
         const a = await fetch("http://localhost:4000/notas/" + taskId, options);
         deleteById(taskId);
     }
-
-
-
 
 
   useEffect(() => {
@@ -234,11 +217,9 @@ function App() {
         FindAllSavedTasks();
       }
       if (seleccion === "active") { findAllPendingTasks(); }
-      if (seleccion === "completed") { findAllCompletedTasks(); }
-      
+      if (seleccion === "completed") { findAllCompletedTasks(); }      
     
   }, [edit2]);
-
 
   useEffect(() => {
     
@@ -247,7 +228,6 @@ function App() {
       }
     
   }, [seleccion]);
-
 
 
   return (

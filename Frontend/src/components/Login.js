@@ -5,6 +5,13 @@ const Login = () => {
   return (
 
     <div className="welcomeScreen">
+
+      <div className="frameImageWelcome">
+        <div className="imageWelcome">
+          <img className="imagendewell" src="https://i.blogs.es/6712c1/david-travis-5byxxawhoqg-unsplash/450_1000.webp" alt="132" />          
+        </div>
+      </div>
+
       <div className="messageWelcome">
         <p className="message1">
           A Place to Keep Your Tasks
@@ -14,13 +21,7 @@ const Login = () => {
         </p>
         <button onClick={() => loginWithRedirect()} type="submit" className="enterButton">Get into</button>
       </div>
-      <div className="frameImageWelcome">
-        <div className="imageWelcome">
-          <div>
-            <img className="imagendewell" src="https://i.blogs.es/6712c1/david-travis-5byxxawhoqg-unsplash/450_1000.webp" alt="132" />
-          </div>
-        </div>
-      </div>
+      
     </div>
 
   );

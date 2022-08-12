@@ -6,15 +6,13 @@ export default function Task(props) {
     return (
         <div className="task">
 
-            <i className="bookmarkCompleted"
+            <div className="bookmarkCompleted"
                 onClick={props.putCompleted}
-
                 style={!props.completed ? { color: "blue" }
-                    : {}}
-            >
+                    : {}}>
                 <div className="0">o</div>
 
-            </i>
+            </div>
 
             <i className="individualTask" id={props.id}>
                 {props.name}</i>

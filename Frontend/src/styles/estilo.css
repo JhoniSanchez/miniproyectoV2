@@ -1,8 +1,9 @@
 .welcomeScreen {
   display: flex;
+  flex-direction:row;  
+  flex-wrap: wrap; 
+  justify-content:center;
   align-items: center;
-  flex-wrap: wrap;
-  justify-content: center;
   background-image: url("C:\Users\USER\Desktop\miniproyectojhoni-copia\Frontend\images\bg-desktop-light.jpg");
   background-size: 100% auto;
   background-repeat: no-repeat;
@@ -12,20 +13,16 @@
 .messageWelcome {
   text-align: center;
   padding: 30px;
-  order: 4;
 }
 
 .message1 {
-  width: 100%;
   padding: 15px;
-  background: transparent;
   font-size: 200%;
   font-weight: bold;
 }
 
 .frameImageWelcome {
   padding: 10px;
-  max-width: 400px;
   border-image: 50%;
 }
 
@@ -61,7 +58,7 @@ img {
 
 .enterButton:hover {
   background-color: rgba(252, 159, 255, 0.411);
-  color: white;
+  color: white; 
   font-size: 25px;
 }
 
@@ -69,6 +66,7 @@ img {
 #MainForm {
   height: 300px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-image: url("C:/Users/USER/Desktop/miniproyectojhoni-copia/Frontend/images/bg-desktop-dark.jpg");
@@ -78,18 +76,17 @@ img {
 #titleForm {
   width: 540px;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   font-weight: bolder;
   font-size: 45px;
   color: #ffffff;
 }
 
 .userandSession {
-  height: 40px;
+  margin: 5px;
   background-color: rgba(235, 208, 139, 0);
   color: rgb(255, 255, 255);
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 
@@ -108,15 +105,16 @@ img {
 }
 
 .closeSession {
-  color: #ff9d9d;
+  color: #f06666;
   cursor: pointer;
   text-decoration: none;
   font-size: 10px;
 }
 
 #buttonForm {
-  margin-top: 15px;
+  width: 100%;
   display: flex;
+  justify-content: center;
   align-items: center;
   background-color: #494c6b00;
 }
@@ -158,14 +156,13 @@ input {
 
 .bookmarkCompleted {
   margin-right: 20px;
-  font-weight: bolder;
+  font-weight:bolder;
   font-size: 20px;
   cursor: pointer;
-
 }
 
 .individualTask {
-  width: 395px;
+  width: 450px;
 }
 
 .editToDo:hover {
@@ -179,13 +176,11 @@ input {
 }
 
 .bookmarkCompleted:hover {
-  color: rgb(49, 197, 255);
-  
+  color: rgb(49, 197, 255);  
 }
 
 #tasks {
   height: 50%;
-  /* width: 1000px; */
   background-color: rgb(224, 224, 224);
   border-radius: 10px;
   position: absolute;
@@ -210,11 +205,13 @@ input {
 
 #ButtonsBottomFilters {
   display: flex;
+  flex-direction: row;
 }
 
 #ButtonsBottomFilters div {
   display: flex;
-  width: 200px;
+  flex-direction: row;
+  width: 210px;
   justify-content: space-evenly;
 }
 
@@ -224,15 +221,10 @@ input {
 }
 
 .deletecompleted:hover {
-  color: #f37575;
+  color: #e43535;
 }
 
-.deletecompleted {
-  cursor: pointer;
-  color: #747474;
-}
-
-.filterButton {
+.deletecompleted,.filterButton {
   cursor: pointer;
   color: #747474;
 }
@@ -251,7 +243,7 @@ input {
     height: 86%;
   }
 
-  #MainForm #titleForm {
+  #titleForm {
     width: 100%;
     font-size: 30px;
   }
@@ -265,26 +257,11 @@ input {
     top: 15.5%;
   }
 
-  /* #ButtonsBottomFilters {
-    justify-content: space-between;
-  } */
-
-  .TaskCount {
+.TaskCount,.deletecompleted,.task, #buttongroupbottomA  {
     font-size: 12px;
-  }
-
-  .deletecompleted {
-    font-size: 12px;
-    
-  }
-
-  .task {
-    font-size: 12px;
-    
   }
 
   #buttongroupbottomA {
-    font-size: 12px;
     display: flex;
     overflow-wrap: break-word;
     position: absolute;
@@ -299,34 +276,26 @@ input {
 
   .userandSession {
     height: 20px;
-    background-color: rgba(235, 208, 139, 0);
-    color: rgb(255, 255, 255);
     margin-left: 13%;
     display: flex;
     align-items: center;
-    justify-content: center;
   }
 
   .Username {
     margin-right: 20px;
     font-weight: 20px;
     cursor: pointer;
-    font-size: 5px;
+    font-size:9px;
   }
 
   #MainForm {
     height: 150px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     background-image: url("C:\Users\USER\Desktop\miniproyectojhoni-copia\Frontend\images\bg-mobile-dark.jpg");
     background-size: 100% auto;
   }
 
   #buttonForm {
     margin-top: 0px;
-    display: flex;
-    align-items: center;
     background-color: #494c6b00;
   }
 
