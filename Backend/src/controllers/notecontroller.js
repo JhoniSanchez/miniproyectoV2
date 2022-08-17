@@ -8,14 +8,6 @@ export const newNote = async (req, res)=>{
     res.json(saved)
 }
 
-
-
-
-
-
-
-
-
 export const getAllNotes = async (req, res)=>{
 
     const filters = req.query.user;

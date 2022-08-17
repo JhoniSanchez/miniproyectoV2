@@ -13,7 +13,7 @@ function App() {
 
   const [id, setId] = useState("");
   const [edit, setEdit] = useState();
-  const [edit2, setEdit2] = useState(true);
+  const [edit2, setEdit2] = useState(false);
   const [seleccion, setSeleccion] = useState("all");
 
 
@@ -36,9 +36,9 @@ function App() {
       }
       thingsToDo.push(listUpdated);
     })
-   
-    SetThingsToDo(thingsToDo);    
-    
+
+    SetThingsToDo(thingsToDo);
+
     setSeleccion("active");
   }
 
@@ -97,26 +97,14 @@ function App() {
         'Content-Type': 'application/json'
       }
     }
-    const responseServer = await fetch("http://localhost:4000/notas/remove/made?user=" + user.name, options);
-    const serverdata = await responseServer.json();
-    const thingsToDo = [];
-
-    serverdata.map((task) => {
-      const listUpdated = {
-        id: task._id,
-        name: task.name,
-        pending: task.pending
-      }
-      thingsToDo.push(listUpdated);
-    })
-    SetThingsToDo(thingsToDo);
-    setSeleccion("bcompleted");
+    await fetch("http://localhost:4000/notas/remove/made?user=" + user.name, options);
+    FindAllSavedTasks();
   }
 
   async function saveTask(event) {
     event.preventDefault();
 
-    if (edit2 === true) {
+    if (edit2 === false) {
       const newTask = document.querySelector("#newTaskToPerform").value;
       const options = {
         method: "POST",
@@ -125,15 +113,13 @@ function App() {
         },
         body: JSON.stringify({ name: newTask, email: user.name })
       }
-      const responseServer = await fetch("http://localhost:4000/notas/", options);
-      const serverdata = await responseServer.json();
-      SetThingsToDo([...thingsToDo, serverdata]);
+      await fetch("http://localhost:4000/notas/", options);
       setSeleccion("active");
-      await findAllPendingTasks();      
+      await findAllPendingTasks();
+      // SetThingsToDo([...thingsToDo, { name: newTask, pending:true, email: user.name }])
 
     }
     else {
-
       const newTask = document.querySelector("#newTaskToPerform").value;
       const options = {
         method: "PUT",
@@ -142,67 +128,54 @@ function App() {
         },
         body: JSON.stringify({ name: newTask })
       }
-      const responseServer = await fetch("http://localhost:4000/notas/" + id, options);
-      
-      await responseServer.json();
-
+      await fetch("http://localhost:4000/notas/" + id, options);
     }
     setEdit()
-    setEdit2(true)
+    setEdit2(false)
   }
-
-
-  function deleteById(id) {
-    const listUpdated = thingsToDo.filter(task => task.id !== id);
-    SetThingsToDo(listUpdated);
-  }
-
 
   async function editTask(e) {
     e.preventDefault();
-    const taskDescription = e.target.previousSibling.previousSibling;
-    const taskId = taskDescription.getAttribute('id');
-    const paragraph = document.getElementById(taskId);
-    const contents = paragraph.innerHTML;
+    const taskId = e.target.previousSibling.previousSibling.getAttribute('id');
+    const contents = document.getElementById(taskId).innerHTML;
+
+    // console.log(taskId)
+    // console.log(contents)
 
     setEdit(contents)
-    setEdit2(false)
+    setEdit2(true)
     setId(taskId)
 
-  }  
+  }
 
-     async function putCompleted(event) {
-        const CompletedBox = event.target;
-        let taskDescription = null;
-
-        if (CompletedBox.classList.contains("0")) {
-            CompletedBox.style = "color: blue";
-            taskDescription = CompletedBox.parentElement.nextSibling;
-        } 
-
-        const options = {
-            method: "PUT", 
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        }
-        const taskId = taskDescription.getAttribute('id');
-        const a = await fetch("http://localhost:4000/notas/markdone/" + taskId, options);
+  async function putCompleted(event) {
+    const CompletedBox = event.target;
+    
+    if (CompletedBox.classList.contains("0")) {
+      CompletedBox.style.color = "blue";
     }
-
-    async function remove (event) {
-        const taskDescription = event.target.previousSibling;
-        const taskId = taskDescription.getAttribute('id');
-        const options = {
-            method: "DELETE",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        }
-        const a = await fetch("http://localhost:4000/notas/" + taskId, options);
-        deleteById(taskId);
+    const options = {
+      method: "PUT",
+      headers: {
+        'Content-Type': 'application/json'
+      },
     }
+    const taskId = CompletedBox.parentElement.nextSibling.getAttribute('id');
+    await fetch("http://localhost:4000/notas/markdone/" + taskId, options);
+  }
 
+  async function remove(event) {
+    const taskId = event.target.previousSibling.getAttribute('id');
+    const options = {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    }
+    await fetch("http://localhost:4000/notas/" + taskId, options);
+    const listUpdated = thingsToDo.filter(task => task.id !== taskId);
+    SetThingsToDo(listUpdated);
+  }
 
   useEffect(() => {
     if (user) {
@@ -210,25 +183,13 @@ function App() {
     }
   }, [user]);
 
-
   useEffect(() => {
-    
-      if (seleccion === "all") {
-        FindAllSavedTasks();
-      }
-      if (seleccion === "active") { findAllPendingTasks(); }
-      if (seleccion === "completed") { findAllCompletedTasks(); }      
-    
+    if (seleccion === "all") {
+      FindAllSavedTasks();
+    }
+    if (seleccion === "active") { findAllPendingTasks(); }
+    if (seleccion === "completed") { findAllCompletedTasks(); }
   }, [edit2]);
-
-  useEffect(() => {
-    
-      if (seleccion === "bcompleted") {
-        FindAllSavedTasks();
-      }
-    
-  }, [seleccion]);
-
 
   return (
 
@@ -241,13 +202,12 @@ function App() {
           setEdit={setEdit}
           allTasks={thingsToDo}
           allTasksPending={(e) => findAllPendingTasks(e)}
-          deleteTaskById={id => deleteById(id)}
           searchPendingTasks={() => findAllPendingTasks()}
           searchSavedTasks={() => FindAllSavedTasks()}
           searchCompletedTasks={() => findAllCompletedTasks()}
           deleteCompletedTasks={() => removeAllCompletedTasks()}
-          remove = {(event) => remove(event)}
-          putCompleted = {(event) => putCompleted(event)}
+          remove={(event) => remove(event)}
+          putCompleted={(event) => putCompleted(event)}
 
         />
         : <Login />}
