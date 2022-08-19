@@ -32,7 +32,8 @@ function App() {
       const listUpdated = {
         id: task._id,
         name: task.name,
-        pending: task.pending
+        pending: task.pending,
+        
       }
       thingsToDo.push(listUpdated);
     })
@@ -196,18 +197,21 @@ function App() {
     <div className="App">
       {isAuthenticated ?
         <MainForm
+
           saveTask={event => saveTask(event)}
-          editTask={event => editTask(event)}
+          
           edit={edit}
-          setEdit={setEdit}
+          setEdit={(e)=>setEdit(e.target.value)}
+
           allTasks={thingsToDo}
-          allTasksPending={(e) => findAllPendingTasks(e)}
+          editTask={event => editTask(event)}
+          remove={(event) => remove(event)}
+          putCompleted={(event) => putCompleted(event)}
+
           searchPendingTasks={() => findAllPendingTasks()}
           searchSavedTasks={() => FindAllSavedTasks()}
           searchCompletedTasks={() => findAllCompletedTasks()}
           deleteCompletedTasks={() => removeAllCompletedTasks()}
-          remove={(event) => remove(event)}
-          putCompleted={(event) => putCompleted(event)}
 
         />
         : <Login />}

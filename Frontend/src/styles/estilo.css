@@ -165,6 +165,11 @@ input {
   width: 450px;
 }
 
+.deleteTodo {
+  margin-left: auto;
+  margin-right: 10px;
+}
+
 .editToDo:hover {
   color: rgb(255, 208, 0);
   cursor: pointer;
@@ -184,8 +189,8 @@ input {
   background-color: rgb(224, 224, 224);
   border-radius: 10px;
   position: absolute;
-  left: 50%;
-  top: 23%;
+  left:50%;
+  top: 25%;
   transform: translateX(-50%);
   background-color: rgba(0, 0, 0, 0.726);
 }
@@ -196,11 +201,6 @@ input {
   background-color: #050020a2;
   border-radius: 5px;
   overflow: auto;
-}
-
-.deleteTodo {
-  margin-left: auto;
-  margin-right: 10px;
 }
 
 #ButtonsBottomFilters {
@@ -254,7 +254,7 @@ input {
 
   #tasks {
     width: 80%;
-    top: 15.5%;
+    top: 21%;
   }
 
 .TaskCount,.deletecompleted,.task, #buttongroupbottomA  {

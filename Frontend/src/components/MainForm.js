@@ -22,12 +22,17 @@ export default function MainForm(props) {
              
                 <div className="userandSession">
                     <p className="Username">Hola, {user.name}</p>
-                    <p className="closeSession" onClick={() => logout()}>Sign off</p>
+                    <p className="closeSession" 
+                        onClick={() => logout()}>Sign off</p>
                 </div>
               
-                <form onSubmit={event => props.saveTask(event)}>
+                <form onSubmit={props.saveTask}>
                     <div id="buttonForm">
-                        <input  type="text" placeholder="Create or edit the task..." name="newTaskToPerform" id="newTaskToPerform" value={props.edit}  onChange={(e)=>props.setEdit(e.target.value)} />
+                        <input  type="text" 
+                                placeholder="Create or edit the task..." 
+                                name="newTaskToPerform" id="newTaskToPerform" 
+                                value={props.edit}  
+                                onChange={props.setEdit} />
                         <button type="submit">Save</button>
                     </div>
                 </form>
@@ -36,15 +41,17 @@ export default function MainForm(props) {
         </div>
 
 <ThingsToDo
-                    editTask={event => props.editTask(event)}
-                    allTasks={props.allTasks}
-                    deleteTaskById={id => props.deleteTaskById(id)}            
-                    searchPendingTasks={() => props.searchPendingTasks()}            
-                    searchSavedTasks={() =>props.searchSavedTasks ()}            
-                    searchCompletedTasks={() => props.searchCompletedTasks()}            
-                    deleteCompletedTasks={() =>props.deleteCompletedTasks ()}  
-                    remove = {(event) => props.remove(event)}
-                    putCompleted = {(event) => props.putCompleted(event)}
+                //
+                allTasks={props.allTasks}
+                editTask={props.editTask}
+                remove={props.remove}
+                putCompleted={props.putCompleted}
+                //                                      
+                searchPendingTasks={props.searchPendingTasks}
+                searchSavedTasks={props.searchSavedTasks}
+                searchCompletedTasks={props.searchCompletedTasks}
+                deleteCompletedTasks={props.deleteCompletedTasks}  
+
 />
 
 

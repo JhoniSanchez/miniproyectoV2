@@ -11,27 +11,27 @@ function thingsToDo(props) {
                 {
                     props.allTasks.map(task =>
                         <Task
+                        //
                             key={task.id}
+                        //    
                             name={task.name}
                             id={task.id}
                             email={task.email}
-                            deleteTaskById={id => props.deleteTaskById(id)} 
-                            completed={task.pending} 
+                            completed={task.pending}
+                        //
                             editTask = {props.editTask}
-                            searchFoPendingTasks ={props.searchPendingTasks}
-                            remove = {(event) => props.remove(event)}
-                            putCompleted = {(event) => props.putCompleted(event)}
+                            remove = {props.remove}
+                            putCompleted = {props.putCompleted}
                         />
                     )
                 }
             </div>
 
             <Buttons
-            deleteTaskById={id => props.deleteById(id)}
-            searchPendingTasks={() => props.searchPendingTasks()}
-            searchSavedTasks={() => props.searchSavedTasks()}
-            searchCompletedTasks={() => props.searchCompletedTasks()}
-            deleteCompletedTasks={() => props.deleteCompletedTasks()}
+            searchPendingTasks={props.searchPendingTasks}
+            searchSavedTasks={props.searchSavedTasks}
+            searchCompletedTasks={props.searchCompletedTasks}
+            deleteCompletedTasks={props.deleteCompletedTasks}
             />
 
         </div>

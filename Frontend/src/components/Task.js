@@ -10,14 +10,14 @@ export default function Task(props) {
                 onClick={props.putCompleted}
                 style={!props.completed ? { color: "blue" }
                     : {}}>
-                <div className="0">o</div>
+                <div className="0">■</div>
 
             </div>
 
             <i className="individualTask" id={props.id}>
-                {props.name}</i>
+              {props.name}</i>
             <i className="deleteTodo" onClick={props.remove}>X</i>
-            <i className="editToDo" onClick={(e) => props.editTask(e)}>Edit</i>
+            <i className="editToDo" onClick={props.editTask}>Edit</i>
 
 
         </div>
