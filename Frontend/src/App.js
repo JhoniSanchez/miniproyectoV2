@@ -79,7 +79,7 @@ setOpenDialog(true);
           'Content-Type': 'application/json'
         }
       }
-        
+
       const responseServer = await fetch("http://localhost:4000/notas/made/?user=" + user.name, options);
       const serverdata = await responseServer.json();
       const thingsToDo = [];
@@ -209,6 +209,7 @@ setOpenDialog(true);
     if (user) {
       FindAllSavedTasks();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
 
@@ -218,6 +219,7 @@ setOpenDialog(true);
     }
     if (seleccion === "active") { findAllPendingTasks(); }
     if (seleccion === "completed") { findAllCompletedTasks(); }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [edit2]);
 
   return (
