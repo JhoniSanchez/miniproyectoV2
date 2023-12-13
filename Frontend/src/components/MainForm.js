@@ -6,11 +6,8 @@ import ThingsToDo from "./thingsToDo";
 
 export default function MainForm(props) {
 
-
     const { user } = useAuth0();
     const { logout } = useAuth0();
-    // console.log(logout);
-
       
     return (
         <>        
@@ -21,7 +18,7 @@ export default function MainForm(props) {
                 <div id="titleForm">Things to do</div>
              
                 <div className="userandSession">
-                    <p className="Username">Hola, {user.name}</p>
+                    <p className="Username">Hi, {user.name}</p>
                     <p className="closeSession" 
                         onClick={() => logout()}>Sign off</p>
                 </div>
@@ -33,7 +30,11 @@ export default function MainForm(props) {
                                 name="newTaskToPerform" id="newTaskToPerform" 
                                 value={props.edit}  
                                 onChange={props.setEdit} />
-                        <button type="submit">Save</button>
+                        <button 
+                        type="submit" 
+                        style={props.edit2 ?{'backgroundColor':' #fa750075'}:{'backgroundColor':'#12131b75'}}>
+                            {props.edit2 ? "UpDate":"Save"}
+                        </button>
                     </div>
                 </form>
             </div>

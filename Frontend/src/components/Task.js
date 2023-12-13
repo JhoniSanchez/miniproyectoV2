@@ -1,27 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/estilo.css";
+import Confirm from "./Confirm";
 
 export default function Task(props) {
+  const [openDialog, setOpenDialog] = useState(false);
+  const [id, setId] = useState(null);
+  const menssage = 'Are you sure you want to delete this tasks?'
 
-    return (
-        <div className="task">
+  const handleDeleteClick = (event) => {
+    const taskId = event.target.previousSibling.getAttribute('id');
+    setId(taskId)
+    setOpenDialog(true);
+  };
 
-            <div className="bookmarkCompleted"
-                onClick={props.putCompleted}
-                style={!props.completed ? { color: "blue" }
-                    : {}}>
-                <div className="0">■</div>
+  const handleDialogClose = () => {
+    setOpenDialog(false);
+  };
 
-            </div>
+  const handleDeleteConfirmed = () => {
+    props.remove(id);
+    setOpenDialog(false);
+  };
 
-            <i className="individualTask" id={props.id}>
-              {props.name}</i>
-            <i className="deleteTodo" onClick={props.remove}>X</i>
-            <i className="editToDo" onClick={props.editTask}>Edit</i>
+  return (
+    <div className="task">
 
+      <div
+        className="bookmarkCompleted"
+        onClick={props.putCompleted}
+        style={!props.completed ? { color: "blue" } : {}}
+      >
+      <div className="0">■</div>
+      </div>
 
-        </div>
-    )
+      <i className="individualTask" id={props.id}> {props.name}</i>
+      <i className="deleteTodo" onClick={handleDeleteClick}>X</i>
+      <i className="editToDo" onClick={props.editTask}>Edit</i>
+
+      <Confirm
+        open={openDialog}
+        onClose={handleDialogClose}
+        onConfirm={handleDeleteConfirmed}
+        menssage={menssage}
+      />
+
+    </div>
+  );
 }
-
-

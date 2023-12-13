@@ -9,6 +9,7 @@ function thingsToDo(props) {
         <div id="tasks">
             <div id="listOfAllTasks">
                 {
+                    props.allTasks && props.allTasks.length > 0 ? 
                     props.allTasks.map(task =>
                         <Task
                         //
@@ -23,7 +24,7 @@ function thingsToDo(props) {
                             remove = {props.remove}
                             putCompleted = {props.putCompleted}
                         />
-                    )
+                    ): <p>No Found</p>
                 }
             </div>
 

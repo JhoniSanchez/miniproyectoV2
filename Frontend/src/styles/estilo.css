@@ -1,10 +1,13 @@
+
+
+
 .welcomeScreen {
   display: flex;
   flex-direction:row;  
   flex-wrap: wrap; 
   justify-content:center;
   align-items: center;
-  background-image: url("C:\Users\USER\Desktop\miniproyectojhoni-copia\Frontend\images\bg-desktop-light.jpg");
+  background-image: url("../../images/bg-desktop-light.jpg");
   background-size: 100% auto;
   background-repeat: no-repeat;
   padding: 10px;
@@ -69,7 +72,7 @@ img {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-image: url("C:/Users/USER/Desktop/miniproyectojhoni-copia/Frontend/images/bg-desktop-dark.jpg");
+  background-image: url("../../images/bg-desktop-dark.jpg");
   background-size: 100% auto;
 }
 
@@ -143,6 +146,7 @@ input {
   font-size: 20px;
 }
 
+
 .task {
   font-size: 20px;
   padding: 10px;
@@ -152,6 +156,31 @@ input {
   margin: 10px;
   border-radius: 5px;
   color: #ffffff9d;
+  
+}
+
+
+.sss {
+  background-color: rgba(3, 6, 7, 0.60) !important; 
+  color: #ffffff9d !important;
+  
+}
+.ss {
+  background-color: rgb(46, 0, 99) !important; 
+  color: #ffffff !important;
+
+  
+}
+.ss1 {
+  background-color: rgb(46, 0, 99) !important; 
+  color: #fdae81 !important;
+
+  
+}
+.ss1:hover {
+  background-color: rgb(0, 0, 0) !important; 
+  color: #ff0000 !important;
+  
 }
 
 .bookmarkCompleted {
@@ -163,6 +192,7 @@ input {
 
 .individualTask {
   width: 450px;
+  text-align: left;
 }
 
 .deleteTodo {
@@ -196,6 +226,7 @@ input {
 }
 
 #listOfAllTasks {
+  text-align: center;
   height: 91%;
   margin: 10px;
   background-color: #050020a2;
@@ -290,7 +321,7 @@ input {
 
   #MainForm {
     height: 150px;
-    background-image: url("C:\Users\USER\Desktop\miniproyectojhoni-copia\Frontend\images\bg-mobile-dark.jpg");
+    background-image: url("../../images/bg-mobile-dark.jpg");
     background-size: 100% auto;
   }
 
